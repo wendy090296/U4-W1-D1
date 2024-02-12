@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Job from "./Job";
+import Favourites from "./Favourites";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
@@ -32,9 +33,14 @@ const MainSearch = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xs={10} className="d-flex justify-content-center my-3">
+        <Col xs={10} className="mx-auto my-3 d-flex justify-content-center">
           <h1 className="display-1">Remote Jobs Search</h1>
         </Col>
+        <Col xs={2} className="text-end">
+          <Favourites></Favourites>
+        </Col>
+      </Row>
+      <Row>
         <Col xs={10} className="mx-auto">
           <Form onSubmit={handleSubmit}>
             <Form.Control

@@ -11,18 +11,18 @@ const initialState = {
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     // type sempre obbligatorio
-    case "ADD TO FAVOURITES":
+    case "ADD-TO-FAVOURITES":
       return {
         ...state,
         content: [...state.favourites.content, action.playload],
       };
 
-    case "REMOVE_FROM_FAVORITES":
+    case "REMOVE-FROM-FAVOURITES":
       return {
         ...state,
-        favorites: {
-          ...state.favorites,
-          content: state.favorites.content.filter(
+        favourites: {
+          ...state.favourites,
+          content: state.favourites.content.filter(
             (job, i) => i !== action.payload
           ),
         },

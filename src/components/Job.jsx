@@ -1,53 +1,51 @@
 import { Row, Col } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 const Job = ({ data }) => {
-  // const navigate = useNavigate();
+  console.log(data);
+  const [clicked, setClicked] = useState(false);
+  // const favourites = useSelector((state) => state.favourites.content);
   const dispatch = useDispatch();
-  const favourites = useSelector((state) => state.favorites.content);
-  const [favourite, setFavourite] = useState(favourites.includes(data._id));
-  // const stateReader = useSelector(
-  // (state) => state.favouriteList.content.length
-  const handleClick = () => {
-    if (favourite) {
-      dispatch({
-        type: "REMOVE FROM FAV.",
-        payload: data._id,
-      });
-    } else {
-      dispatch({
-        type: "ADD TO FAV.",
-        payload: data._id,
-      });
-    }
-    setFavourite(!favourite);
-  };
-  return (
-    <>
-      <Row
-        className="mx-0 mt-3 p-3 justify-content-between"
-        style={{ border: "1px solid #00000033", borderRadius: 4 }}
-      >
-        <Col xs={3}>
-          <Link to={`/${data.company_name}`}>{data.company_name}</Link>
-        </Col>
-        <Col xs={1}>
-          <i
-            onClick={handleClick}
-            className={`bi bi-star${favourite ? "-fill" : ""}`}
-          ></i>{" "}
-        </Col>
 
-        <Col xs={8}>
-          <a href={data.url} target="_blank" rel="noreferrer">
-            {data.title}
-          </a>
-        </Col>
-      </Row>
-    </>
+  return (
+    <Row
+      className="mx-0 mt-3 p-3"
+      style={{ border: "1px solid #00000033", borderRadius: 4 }}
+    >
+      <Col xs={3}>
+        <Link to={`/${data.company_name}`}>{data.company_name}</Link>
+      </Col>
+      <Col xs={7}>
+        <a href={data.url} target="_blank" rel="noreferrer">
+          {data.title}
+        </a>
+      </Col>
+      <Col xs={2}>
+        <i
+          className="bi bi-star"
+          style={clicked ? { color: "gold" } : { color: "black" }}
+          onClick={() => {
+            setClicked(!clicked);
+            dispatch({
+              type: "ADD-TO-FAVOURITES",
+              payload: data,
+            });
+          }}
+        ></i>
+        <i
+          className="bi bi-trash ms-5 text-danger"
+          onClick={() => {
+            dispatch({
+              type: "REMOVE-FROM-FAVOURITES",
+              payload: data,
+            });
+          }}
+        ></i>
+      </Col>
+    </Row>
   );
 };
+
 export default Job;
